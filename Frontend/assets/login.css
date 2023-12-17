@@ -1,0 +1,89 @@
+html{
+
+
+    max-width: 1940px;
+
+}
+
+
+body {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin-left: 26%;
+    margin-right: 28%;
+    
+
+}
+
+main{
+    flex: 1;
+    margin: auto;
+}
+
+ul li:nth-child(3){
+    font-weight: bold;
+}
+.formulaire{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 15px;
+
+}
+
+input{
+
+    width: 300px; 
+    height: 40px;
+    border: none;
+    box-shadow: 2px 5px 8px rgb(197, 193, 193);
+
+}
+
+.submit{
+    margin-left: 25%;
+    width: 150px;
+    cursor: pointer;
+}
+.submit a{
+    margin-top: 20px;
+    text-decoration: underline grey;
+    
+    color: black;
+
+
+}
+.connect{
+    margin-top: 20px;
+    background-color: #1D6154;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-family: 'Syne';
+    border: none;
+    cursor: pointer;
+}
+
+/**MP**/
+.submit a:hover{
+
+    font-weight: none;
+ 
+ }
+footer{
+
+    font-size: 12px;
+}
+
