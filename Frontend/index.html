@@ -34,8 +34,18 @@
 					<button class="js-modal-close">Fermer la boite modale</button>
 					<p>Galerie</p>
 					<div id="model_gallery" class="modal-gallery">
-						
+						<button class="addImg">ADD</button>
 					</div>
+					
+					<form id="addImageForm">
+						
+						<input type="file" id="imageInput" accept="image/*" required>
+						<input type="text" id="titleInput" placeholder="Titre" required>
+						<select id="categorySelect" required></select>
+						<button class="addImage" type="submit">Ajouter</button>
+					</form>
+					  
+
 
 				</div>
 			</aside>

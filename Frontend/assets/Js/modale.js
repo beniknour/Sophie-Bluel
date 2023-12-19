@@ -1,8 +1,9 @@
+import { displayWorks } from "./index.js";
+
+/////////////Suppression d'un projet ///////////////////
+
 
 let token = localStorage.getItem("token");
-//Suppression d'un projet 
-
-
 
 function deleteProject(projectId) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
@@ -35,11 +36,12 @@ function deleteProject(projectId) {
 }
   
 
-//ouverture et fermeture du modale 
+//ouverture et fermeture du modale /////////////////////////////////////
 let modal = null;
 
 const openModal = function(e) {
     e.preventDefault();
+    
     const target = document.querySelector(e.target.getAttribute('href'));
     target.style.display = null;
     target.removeAttribute('aria-hidden');
@@ -70,7 +72,8 @@ const closeModalOutside = function(e) {
     }
 };
 
-//affichage des images sur le modale
+///////////////////affichage des images sur le modale//////////////////////////
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch('http://localhost:5678/api/works')
         .then(response => {
@@ -90,13 +93,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayImagesInModal(images) {
     const modalGallery = document.getElementById('model_gallery');
-
+    // const newImage = document.getElementById('addImageForm');//formulaire
+    // newImage.style.display = 'none';//ne pas montrer le formulaire
     images.forEach(image => {
         const container = document.createElement('div');
         const imgElement = document.createElement('img');
         imgElement.src = image.imageUrl; 
         imgElement.alt = image.title; 
         
+
+
         //affichage de la poubelle
         const deleteIcon = document.createElement('i');
         deleteIcon.classList.add('far', 'fa-trash-alt'); // Ajoute une classe pour le style
@@ -115,7 +121,37 @@ function displayImagesInModal(images) {
     // modal.style.display = 'block';
     // modal.removeAttribute('aria-hidden');
 }
+//////////////////new modal/////////////////////////////
 
 
+const addButton = document.querySelector('.addImg'); // Sélectionnez le bouton "Add"
+const modalGallery = document.getElementById('model_gallery'); // Sélectionnez la galerie d'images
+const modalWrapper = document.querySelector('.modal-wrapper');
 
 
+// Fonction pour afficher le bouton "Retour"
+function afficherBoutonRetour() {
+    const backButton = document.createElement('button'); // Créez un bouton
+    backButton.textContent = 'Retour'; // Texte du bouton
+    backButton.className = 'retourButton'; // Classe CSS pour le bouton
+    backButton.addEventListener('click', () => {
+        modalGallery.style.display = 'block'; // Affiche à nouveau la galerie d'images
+        backButton.remove(); // Retire le bouton "Retour" une fois cliqué
+    });
+
+    modalWrapper.appendChild(backButton); // Ajoute le bouton dans le wrapper modal
+}
+
+// Fonction pour afficher le formulaire
+function afficherFormulaire() {
+    
+    newImage.style.display = 'block'; // Affiche le formulaire
+}
+// Ajoutez un écouteur d'événements au bouton "Add"
+addButton.addEventListener('click', () => {
+    modalGallery.style.display = 'none'; // Cache la galerie d'images
+    
+    afficherBoutonRetour(); // Affiche le bouton "Retour"
+    afficherFormulaire();
+
+});
