@@ -36,15 +36,33 @@
 					<div id="model_gallery" class="modal-gallery">
 						<button class="addImg">ADD</button>
 					</div>
-					
-					<form id="addImageForm">
-						
-						<input type="file" id="imageInput" accept="image/*" required>
-						<input type="text" id="titleInput" placeholder="Titre" required>
-						<select id="categorySelect" required></select>
-						<button class="addImage" type="submit">Ajouter</button>
-					</form>
-					  
+					<!-- ajout nouveau projet -->
+					<section id="new-project" class="new-project">
+						<h2>Ajout photo</h2>
+						<form id="new-project-form">
+
+							<div class="add-image">
+								<label for="imageInput">+ Ajouter Phto</label>
+								<input type="file" id="imageInput" accept="image/*" required>
+							</div>
+							<div class="add-title">
+								<label for="titleInput">Titre</label>
+								<input type="text" id="titleInput" placeholder="Titre" required>
+							</div>
+							<div class="add-category">
+								<label for="categorySelect">Catégorie</label>
+								<select id="categorySelect" required>
+
+									<option value="Objets">Objets</option>
+									<option value="Appartements">Appartements</option>
+									<option value="Hotels & restaurants">Hotels & restaurants</option>
+								</select>
+
+							</div>
+							
+							<button class="addImage" type="submit">Ajouter</button>
+						</form>
+					</section>  
 
 
 				</div>

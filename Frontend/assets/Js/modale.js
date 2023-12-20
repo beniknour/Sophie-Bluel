@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayImagesInModal(images) {
     const modalGallery = document.getElementById('model_gallery');
-    // const newImage = document.getElementById('addImageForm');//formulaire
+    
     // newImage.style.display = 'none';//ne pas montrer le formulaire
     images.forEach(image => {
         const container = document.createElement('div');
@@ -144,7 +144,7 @@ function afficherBoutonRetour() {
 
 // Fonction pour afficher le formulaire
 function afficherFormulaire() {
-    
+    const newImage = document.getElementById('addImageForm');//formulaire
     newImage.style.display = 'block'; // Affiche le formulaire
 }
 // Ajoutez un écouteur d'événements au bouton "Add"
@@ -155,3 +155,81 @@ addButton.addEventListener('click', () => {
     afficherFormulaire();
 
 });
+
+///////////////////////////AJOUT D'UN PROJET/////////////////////
+
+
+  
+document.getElementById("new-project-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const categories = {
+        Objets: 1,
+        Appartements: 2,
+        'Hotels & restaurants': 3,
+      };
+    const title = document.getElementById("titleInput").value;
+    const imageFile = document.getElementById("imageInput").files[0];
+    const category = document.getElementById("categorySelect").value;
+    const categoryID = categories[category];
+
+    if (!title || !imageFile || !category) {
+        alert("Veuillez remplir tous les champs du formulaire.");
+        return;
+    }
+  
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("image", imageFile);
+    formData.append("category", categoryID);
+    formData.append("userId", 0);
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                accept: "application/json",
+            },
+            body: formData,
+        });
+  
+        if (response.ok) {
+            alert("Photo ajoutée avec succès !");
+            const responseData = await response.json();
+            if (image.size < 4 * 1048576) {
+                // Création de la nouvelle carte image
+                const newElement = document.createElement("figure");
+                const newImage = document.createElement("img");
+                newImage.src = responseData.imageUrl;
+                const newTitle = document.createElement("figcaption");
+                newTitle.innerText = title;
+    
+                newElement.appendChild(newImage);
+                newElement.appendChild(newTitle);
+    
+                // Ajout de la nouvelle carte image à la galerie
+                const gallery = document.querySelector("#gallery");
+                gallery.appendChild(newElement);
+    
+                // Efface le formulaire après l'ajout
+                document.getElementById("new-project-form").reset();
+            }
+        } else {
+            throw new Error("Erreur lors de l'ajout de la photo.");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la soumission du formulaire ", error);
+        console.error("Réponse de l'API :", await response.json());
+        alert("Une erreur s'est produite. Veuillez réessayer.");
+    }
+});
+
+  
+
+
+
+
+
+
+
+
