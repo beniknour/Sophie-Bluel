@@ -51,4 +51,4 @@ categoryButtons.forEach(button => {
   });
 });
 
-export { displayWorks };
+export{displayWorks};

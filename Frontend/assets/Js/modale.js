@@ -34,15 +34,46 @@ function deleteProject(projectId) {
       console.error(`Erreur lors de la suppression du projet avec l'ID ${projectId} :`, error);
     });
 }
+////////////////afficher les boutons seulement aprés user = true///////////////
+function estConnecte() {
+    // Récupère l'état de connexion depuis le localStorage
+    const loggedIn = localStorage.getItem("loggedIn");
+    return loggedIn === "true"; 
+  }
   
+  function gererVisibiliteElement() {
+    if (estConnecte()) {
+      document.getElementById('openModal').style.display = 'block';
+    } else {
+      document.getElementById('openModal').style.display = 'none';
+    }
+  }
+  
+    gererVisibiliteElement();
+ 
+  
+///////afficher la deuxieme page du modal/////
+function activerFormulaire() {
+    const addButton = document.querySelector('.addImg');
+    const form = document.getElementById('new-project-form');
+   
+    addButton.addEventListener('click', function() {
+      form.style.display = 'block';
+    });
+  }
+  
+  activerFormulaire();
+
 
 //ouverture et fermeture du modale /////////////////////////////////////
 let modal = null;
 
 const openModal = function(e) {
     e.preventDefault();
+    e.stopPropagation();
     
     const target = document.querySelector(e.target.getAttribute('href'));
+
     target.style.display = null;
     target.removeAttribute('aria-hidden');
     target.setAttribute('aria-modal', 'true');
@@ -57,14 +88,14 @@ document.querySelectorAll('.js-modal').forEach(a => {
 const closeModal = function(e) {
     if (modal === null) return;
     e.preventDefault();
-    
+
     modal.style.display = 'none';
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
     window.removeEventListener('click', closeModalOutside);
     modal = null;
-};
+}
 
 const closeModalOutside = function(e) {
     if (e.target === modal) {
@@ -94,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function displayImagesInModal(images) {
     const modalGallery = document.getElementById('model_gallery');
     
-    // newImage.style.display = 'none';//ne pas montrer le formulaire
+    
     images.forEach(image => {
         const container = document.createElement('div');
         const imgElement = document.createElement('img');
@@ -131,16 +162,20 @@ const modalWrapper = document.querySelector('.modal-wrapper');
 
 // Fonction pour afficher le bouton "Retour"
 function afficherBoutonRetour() {
-    const backButton = document.createElement('button'); // Créez un bouton
-    backButton.textContent = 'Retour'; // Texte du bouton
-    backButton.className = 'retourButton'; // Classe CSS pour le bouton
-    backButton.addEventListener('click', () => {
-        modalGallery.style.display = 'block'; // Affiche à nouveau la galerie d'images
-        backButton.remove(); // Retire le bouton "Retour" une fois cliqué
-    });
+    // Vérifier si le bouton "Retour" existe déjà
+    if (!document.querySelector('.retourButton')) {
+        const backButton = document.createElement('button');
+        backButton.textContent = 'Retour';
+        backButton.className = 'retourButton';
+        backButton.addEventListener('click', () => {
+            modalGallery.style.display = 'block';
+            backButton.remove();
+        });
 
-    modalWrapper.appendChild(backButton); // Ajoute le bouton dans le wrapper modal
+        modalWrapper.appendChild(backButton);
+    }
 }
+
 
 // Fonction pour afficher le formulaire
 function afficherFormulaire() {
@@ -228,6 +263,7 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
 
 
 
+  
 
 
 

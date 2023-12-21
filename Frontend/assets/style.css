@@ -248,24 +248,120 @@ a:active{
 
 .modal-wrapper{
     overflow: auto;
-    width: 600px;
-	height: 500px;
-    padding: 20px;
+    width: 686px;
+    height: 745px;
+	
+    padding: 30px;
     background-color: #FFF;
+	border-radius: 10px;
 }
 .modal-wrapper p{
 
-	font-size: 20px;
+	font-size: 30px;
 	text-align: center;
 	margin-bottom: 20px;
 
+}
+#model_gallery {
+	display: grid;
+	margin-left: 50px;
+	margin-right: 50px;
+    row-gap: 45px;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+  }
+.modal-gallery div{
+
+	display: block;
+	height: 100px;
+	width: auto;
 }
 .modal-gallery img{
 
 	margin-top: 20px;
 	margin-left: 10px;
-	max-Width :30%;
-	height: auto;
+	
+	height: 122px;
+	width: 89px;
+	
+}
+/***button fermer**/
+
+.js-modal-close{
+	position: relative;
+	background-color: white;
+	border: none;
+	font-size: 20px;
+	right: -595px;
 }
 
+/**Ajouter une photo**/
+.line{
+
+	border-top:1px solid grey ;
+	width: 506px;
+	position: fixed;
+	top: 660px; 
+    right: 466px;
+}
+.addImg{
+
+	
+    background-color: #1D6154;
+    border-radius: 20px;
+    padding: 10px 30px;
+    color: white;
+    font-weight: bold;
+    font-family: 'Syne';
+    border: none;
+    cursor: pointer;
+	text-align: center;
+	width: 240px;
+	margin-top: 30px;
+	margin-left: 190px;
+	margin-right: 190px;
+	position: fixed;
+	top: 692px;
+    
+
+}
 /**trash**/
+.fa-trash-alt{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -120px;
+    color: #ffffff;
+    cursor: pointer;
+    background: black;
+    width: 22px;
+    height: 24px;
+    position: relative;
+    left: 71px;
+    
+
+}
+
+
+/**modifier**/
+
+.modification-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+.fa-pen-to-square{
+	color: #000;
+}
+.pen{
+	margin-bottom: 30px;
+}
+
+/**liens**/
+
+a {
+	color: #000; 
+	text-decoration: none; 
+  }
+  

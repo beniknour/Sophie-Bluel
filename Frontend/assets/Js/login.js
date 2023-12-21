@@ -39,7 +39,7 @@ const form = document.getElementById("loginForm");
         // Redirection vers la page souhaité et "true" pour les modifications du index.html
         localStorage.setItem("loggedIn", "true");
         location.href = "./index.html";
-
+        document.getElementById('openModal').style.display = 'block';
 
       } else {
         error.innerText = " Erreur dans l’identifiant ou le mot de passe";
@@ -52,5 +52,6 @@ const form = document.getElementById("loginForm");
     })
     .catch((err) => console.log(err)); // Affiche l'erreur dans la console en cas d'erreur de demande
 });
+
 
 

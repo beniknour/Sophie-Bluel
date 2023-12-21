@@ -6,7 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
+	<!-- lien fontawesome -->
+	<script src="https://kit.fontawesome.com/f266b52627.js" crossorigin="anonymous"></script>
+
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
@@ -28,21 +30,23 @@
 	
 		</header>
 <!-- modale -->
-		<a href="#modal1" class="js-modal"> Modifer</a>
+		
 			<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" style="display: none;">
 				<div class="modal-wrapper">
-					<button class="js-modal-close">Fermer la boite modale</button>
-					<p>Galerie</p>
-					<div id="model_gallery" class="modal-gallery">
-						<button class="addImg">ADD</button>
-					</div>
+					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+					<p>Galerie photo</p>
+					
+					<div id="model_gallery" class="modal-gallery"></div>
+					<hr class="line">
+					<button class="addImg">Ajouter une photo</button>
+					
 					<!-- ajout nouveau projet -->
 					<section id="new-project" class="new-project">
-						<h2>Ajout photo</h2>
-						<form id="new-project-form">
-
+						
+						<form id="new-project-form" style="display: none;">
+							<h2>Ajout photo</h2>
 							<div class="add-image">
-								<label for="imageInput">+ Ajouter Phto</label>
+								<label for="imageInput">+ Ajouter Photo</label>
 								<input type="file" id="imageInput" accept="image/*" required>
 							</div>
 							<div class="add-title">
@@ -83,7 +87,13 @@
 				</article>
 			</section>
 			<section id="portfolio">
-				<h2 id="projets">Mes Projets</h2>
+				<div class="modification-container">
+					<h2 id="projets">Mes Projets</h2>
+					<div class="pen" id="openModal" style="display: none;">
+						<i class="fa-regular fa-pen-to-square"></i>
+						<a href="#modal1" class="js-modal"> modifer</a>
+					</div>
+				</div>
 				<div class="tri">
 					
 					<button id="tous">Tous</button>

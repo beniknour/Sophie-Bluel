@@ -10,9 +10,8 @@ body {
     width: auto;
     display: flex;
     flex-direction: column;
-    margin-left: 26%;
-    margin-right: 28%;
-    
+   
+    height: 944px;
 
 }
 
@@ -59,8 +58,9 @@ input{
 .submit a{
     margin-top: 20px;
     text-decoration: underline grey;
-    
+    font-size: 13px;
     color: black;
+    padding-left: 10px;
 
 
 }
@@ -87,3 +87,7 @@ footer{
     font-size: 12px;
 }
 
+#error{
+    color: red;
+    font-weight: bold;
+}
