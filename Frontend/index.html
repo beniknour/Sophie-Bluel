@@ -33,8 +33,12 @@
 		
 			<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" style="display: none;">
 				<div class="modal-wrapper">
-					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
-					<p>Galerie photo</p>
+					<div class="button">
+						<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+						<button class="return" style="display: none;"><i class="fa-solid fa-arrow-left"></i></button>
+					</div>
+
+					<p class="galeriePhoto">Galerie photo</p>
 					
 					<div id="model_gallery" class="modal-gallery"></div>
 					<hr class="line">
@@ -44,27 +48,33 @@
 					<section id="new-project" class="new-project">
 						
 						<form id="new-project-form" style="display: none;">
-							<h2>Ajout photo</h2>
+							<p class="ajout">Ajout photo</p>
+
 							<div class="add-image">
+								<i class="fa-regular fa-image"></i>
+								<img id="selectedImage" style="display: none;" />
 								<label for="imageInput">+ Ajouter Photo</label>
-								<input type="file" id="imageInput" accept="image/*" required>
+								<input name="image" type="file" id="imageInput" accept="image/*" required>
+								<p>jpg, png : 4mo max</p>
 							</div>
+
 							<div class="add-title">
 								<label for="titleInput">Titre</label>
-								<input type="text" id="titleInput" placeholder="Titre" required>
+								<input type="text" id="titleInput" required>
 							</div>
 							<div class="add-category">
 								<label for="categorySelect">Catégorie</label>
 								<select id="categorySelect" required>
-
+									<option value=""></option>
 									<option value="Objets">Objets</option>
 									<option value="Appartements">Appartements</option>
 									<option value="Hotels & restaurants">Hotels & restaurants</option>
 								</select>
 
 							</div>
-							
-							<button class="addImage" type="submit">Ajouter</button>
+							<p id="msgError"></p>
+							<hr class="line">
+							<button class="addImage" type="submit">Valider</button>
 						</form>
 					</section>  
 

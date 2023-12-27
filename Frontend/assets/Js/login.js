@@ -47,7 +47,7 @@ const form = document.getElementById("loginForm");
         function msgdelete() {
           error.innerText = "";
         }
-        setTimeout(msgdelete, 40000); //40 secondes
+        setTimeout(msgdelete, 20000); //20 secondes
       }
     })
     .catch((err) => console.log(err)); // Affiche l'erreur dans la console en cas d'erreur de demande

@@ -8,7 +8,7 @@ let token = localStorage.getItem("token");
 function deleteProject(projectId) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
     if (!confirmation) {
-        return; // Annuler la suppression si l'utilisateur clique sur "Annuler" dans la boîte de dialogue
+        return; // Annule la suppression si l'utilisateur clique sur "Annuler" 
     }
     fetch(`http://localhost:5678/api/works/${projectId}`, {
       method: 'DELETE',
@@ -23,7 +23,7 @@ function deleteProject(projectId) {
         // Mettre à jour l'interface utilisateur ou effectuer d'autres actions après la suppression
         const imageToDelete = document.querySelector(`[data-image-id="${projectId}"]`);
         if (imageToDelete) {
-        imageToDelete.remove();
+        imageToDelete.remove();//supprime l'élément spécifique du DOM le retirant complètement de la page
       }
       }
        else {
@@ -34,6 +34,8 @@ function deleteProject(projectId) {
       console.error(`Erreur lors de la suppression du projet avec l'ID ${projectId} :`, error);
     });
 }
+
+
 ////////////////afficher les boutons seulement aprés user = true///////////////
 function estConnecte() {
     // Récupère l'état de connexion depuis le localStorage
@@ -56,9 +58,15 @@ function estConnecte() {
 function activerFormulaire() {
     const addButton = document.querySelector('.addImg');
     const form = document.getElementById('new-project-form');
-   
+    const hr = document.querySelector('.line');
+    const p = document.querySelector('.galeriePhoto');
+    const iconReturn = document.querySelector(".return");
     addButton.addEventListener('click', function() {
-      form.style.display = 'block';
+        iconReturn.style.display ='block';
+        hr.style.display = 'none'; // Masquer le hr
+        p.style.display = 'none'; // Masquer le Galerie photo
+        addButton.style.display = 'none';  //Masque le Ajouter Photo
+        form.style.display = 'block';
     });
   }
   
@@ -136,9 +144,7 @@ function displayImagesInModal(images) {
 
         //affichage de la poubelle
         const deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('far', 'fa-trash-alt'); // Ajoute une classe pour le style
-       
-
+        deleteIcon.classList.add('far', 'fa-trash-alt'); 
 
         container.appendChild(imgElement);
         container.appendChild(deleteIcon);
@@ -157,24 +163,35 @@ function displayImagesInModal(images) {
 
 const addButton = document.querySelector('.addImg'); // Sélectionnez le bouton "Add"
 const modalGallery = document.getElementById('model_gallery'); // Sélectionnez la galerie d'images
-const modalWrapper = document.querySelector('.modal-wrapper');
 
 
-// Fonction pour afficher le bouton "Retour"
-function afficherBoutonRetour() {
-    // Vérifier si le bouton "Retour" existe déjà
-    if (!document.querySelector('.retourButton')) {
-        const backButton = document.createElement('button');
-        backButton.textContent = 'Retour';
-        backButton.className = 'retourButton';
-        backButton.addEventListener('click', () => {
-            modalGallery.style.display = 'block';
-            backButton.remove();
-        });
 
-        modalWrapper.appendChild(backButton);
-    }
+function boutonRetour() {
+    const retourButton = document.querySelector(".return");
+    const modalGallery = document.querySelector(".modal-gallery");
+    const newProjectForm = document.getElementById("new-project-form");
+    const galeriePhoto = document.querySelector(".galeriePhoto");
+    const addImageBtn = document.querySelector(".addImg");
+    const hrLine = document.querySelector(".line");
+    
+    retourButton.addEventListener("click", () => {
+        modalGallery.style.display = "grid";
+        hrLine.style.display = "block";
+        newProjectForm.style.display = "none";
+        galeriePhoto.style.display = "block";
+        addImageBtn.style.display = "block";
+        retourButton.style.display ="none";
+
+    });
 }
+
+ // Appel de la fonction pour gérer le clic sur le bouton "Retour"
+
+boutonRetour();
+
+
+
+
 
 
 // Fonction pour afficher le formulaire
@@ -182,7 +199,7 @@ function afficherFormulaire() {
     const newImage = document.getElementById('addImageForm');//formulaire
     newImage.style.display = 'block'; // Affiche le formulaire
 }
-// Ajoutez un écouteur d'événements au bouton "Add"
+// Button Ajouter 
 addButton.addEventListener('click', () => {
     modalGallery.style.display = 'none'; // Cache la galerie d'images
     
@@ -207,9 +224,13 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
     const category = document.getElementById("categorySelect").value;
     const categoryID = categories[category];
 
+    const errorMsg = document.getElementById("msgError");
+
     if (!title || !imageFile || !category) {
-        alert("Veuillez remplir tous les champs du formulaire.");
+        errorMsg.textContent = "Veuillez remplir tous les champs du formulaire.";
         return;
+    } else {
+        errorMsg.textContent = ""; 
     }
   
     const formData = new FormData();
@@ -244,8 +265,9 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
     
                 // Ajout de la nouvelle carte image à la galerie
                 const gallery = document.querySelector("#gallery");
-                gallery.appendChild(newElement);
-    
+                gallery.prepend(newElement);
+                
+                // gallery.insertBefore(newElement, gallery.firstChild);
                 // Efface le formulaire après l'ajout
                 document.getElementById("new-project-form").reset();
             }
@@ -260,11 +282,69 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
 });
 
   
+ ///Ajout d'une image sur le formulaire//
 
+
+  const imageInput = document.getElementById('imageInput');
+  const imageIcon = document.querySelector('.fa-regular.fa-image');
+  const addImageText = document.querySelector('.add-image label');
+  const imageFormatInfo = document.querySelector('.add-image p');
+
+  imageInput.addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Récupérer le fichier sélectionné
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = function(e) {
+        const imgSrc = e.target.result; // Récupérer l'URL de l'image
+  
+        // Créer un nouvel élément image
+        const newImage = document.createElement('img');
+        newImage.src = imgSrc;
+        
+        newImage.style.height = '190px';
+        newImage.style.width = '130px';
+  
+        // Remplacer l'icône par l'image sélectionnée
+        const addImageDiv = document.querySelector('.add-image');
+        addImageDiv.replaceChild(newImage, imageIcon);
+  
+        // Cacher les éléments "Ajouter Photo" et le paragraphe
+        addImageText.style.display = 'none';
+        imageFormatInfo.style.display = 'none';
+        imageInput.style.display ='none';
+      };
+  
+      reader.readAsDataURL(file); // Lire le fichier en tant que Data URL
+    }
+  });
 
 
   
+//CSS Bouton Valider///  
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('new-project-form');
+    const titleInput = document.getElementById('titleInput');
+    const imageInput = document.getElementById('imageInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const submitButton = document.querySelector('.addImage');
 
+    const toggleSubmitButton = () => {
+        if (titleInput.value && imageInput.value && categorySelect.value) {
+            submitButton.classList.add('active');
+            submitButton.removeAttribute('disabled');
+        } else {
+            submitButton.classList.remove('active');
+            submitButton.setAttribute('disabled', 'true');
+        }
+    };
+
+    form.addEventListener('input', toggleSubmitButton);
+
+    // Vérification initiale
+    toggleSubmitButton();
+});
 
 
 
