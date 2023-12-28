@@ -41,14 +41,53 @@ categoryButtons.forEach(button => {
     const selectedCategory = button.id.toLowerCase();
     let filteredWorks = [];// Création du tableau vide
     if (selectedCategory === 'tous') {
-      filteredWorks = allWorks; // Afficher toutes les œuvres si "Tous" est sélectionné
+      filteredWorks = allWorks; // Affiche Tous
     } else {
       filteredWorks = allWorks.filter(work => {
         return work.category.name.toLowerCase().includes(selectedCategory.replace('hotelsrestaurants', 'hotels & restaurants'));
       });
     }
-    displayWorks(filteredWorks); // Afficher les œuvres filtrées
+    displayWorks(filteredWorks); 
   });
 });
-
 export{displayWorks};
+
+
+////////////////afficher les boutons seulement aprés user = true///////////////
+function estConnecte() {
+  // Récupère l'état de connexion depuis le localStorage
+  const loggedIn = localStorage.getItem("loggedIn");
+  return loggedIn === "true"; 
+}
+
+function gererVisibiliteElement() {
+  if (estConnecte()) {
+    document.getElementById('openModal').style.display = 'block';
+  } else {
+    document.getElementById('openModal').style.display = 'none';
+  }
+}
+
+  gererVisibiliteElement();
+//Masque les boutons de tri
+window.addEventListener('DOMContentLoaded', (event) => {
+  const loggedIn = localStorage.getItem("loggedIn");
+  if (loggedIn === "true") {
+      const triButtons = document.querySelector('#portfolio .tri');
+      if (triButtons) {
+          triButtons.style.display = 'none';
+      }
+      localStorage.removeItem("loggedIn");
+  }
+}); 
+
+
+
+
+
+
+
+
+
+
+
