@@ -89,15 +89,17 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 15px;
 
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	
 }
 
 li:hover {
-	color: #B1663C;
+	font-weight: bold;
 }
 #introduction {
 	display: flex;
@@ -179,8 +181,13 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
-
+input[type="submit"]:hover{
+	
+	background-color: #1e413a;
+	
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -405,7 +412,7 @@ a:active{
 	cursor: pointer;
 
 }
-.new-project{
+#new-project{
 
 
 	margin: 0;

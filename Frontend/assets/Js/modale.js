@@ -1,42 +1,4 @@
-import { displayWorks } from "./index.js";
-//ouverture et fermeture du modale /////////////////////////////////////
-let modal = null;
-
-const openModal = function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const target = document.querySelector(e.target.getAttribute('href'));
-
-    target.style.display = null;
-    target.removeAttribute('aria-hidden');
-    target.setAttribute('aria-modal', 'true');
-    modal = target;
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-    window.addEventListener('click', closeModalOutside);
-};
-document.querySelectorAll('.js-modal').forEach(a => {
-    a.addEventListener('click', openModal);
-});
-
-const closeModal = function(e) {
-    if (modal === null) return;
-    e.preventDefault();
-    e.stopPropagation();
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-    modal.removeAttribute('aria-modal');
-    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
-    window.removeEventListener('click', closeModalOutside);
-    modal = null;
-}
-
-const closeModalOutside = function(e) {
-    if (e.target === modal) {
-        closeModal(e);
-    }
-};
-
+// import { displayWorks } from "./index.js";
 
 /////////////Suppression d'un projet ///////////////////
 
@@ -52,18 +14,17 @@ function deleteProject(projectId) {
     fetch(`http://localhost:5678/api/works/${projectId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        'Authorization': `Bearer ${token}`,
         'accept': '*/*'
       }
     })
     .then(response => {
       if (response.ok) {
         console.log(`Le projet avec l'ID ${projectId} a été supprimé avec succès.`);
-        // Mettre à jour l'interface utilisateur ou effectuer d'autres actions après la suppression
         const imageToDelete = document.querySelector(`[data-image-id="${projectId}"]`);
         if (imageToDelete) {
-        imageToDelete.parentElement.removeChild(imageToDelete);
-        // imageToDelete.remove();
+        
+        imageToDelete.remove();
       }
       }
        else {
@@ -77,27 +38,7 @@ function deleteProject(projectId) {
 }
 
 
-///////afficher la deuxieme page du modal/////
-function activerFormulaire() {
-    const addButton = document.querySelector('.addImg');
-    const form = document.getElementById('new-project-form');
-    const hr = document.querySelector('.line');
-    const p = document.querySelector('.galeriePhoto');
-    const iconReturn = document.querySelector(".return");
-    addButton.addEventListener('click', function() {
-        iconReturn.style.display ='block';
-        hr.style.display = 'none'; // Masquer le hr
-        p.style.display = 'none'; // Masquer le Galerie photo
-        addButton.style.display = 'none';  //Masque le Ajouter Photo
-        form.style.display = 'block';
-    });
-}
-  
-  activerFormulaire();
-
-
-
-///////////////////affichage des images sur le modale//////////////////////////
+///////////////////Affichage des images sur le modale 1//////////////////////////
 
 document.addEventListener("DOMContentLoaded", function () {
    
@@ -150,37 +91,28 @@ function displayImagesInModal(images) {
     });
 
 }
-//////////////////new modal/////////////////////////////
+//////////////////modal 2/////////////////////////////
 
-
-const addButton = document.querySelector('.addImg'); // Sélectionnez le bouton "Add"
-const modalGallery = document.getElementById('model_gallery'); // Sélectionnez la galerie d'images
-
-
-
-function boutonRetour() {
-    const retourButton = document.querySelector(".return");
-    const modalGallery = document.querySelector(".modal-gallery");
-    const newProjectForm = document.getElementById("new-project-form");
-    const galeriePhoto = document.querySelector(".galeriePhoto");
-    const addImageBtn = document.querySelector(".addImg");
-    const hrLine = document.querySelector(".line");
-    
-    retourButton.addEventListener("click", () => {
-        modalGallery.style.display = "grid";
-        hrLine.style.display = "block";
-        newProjectForm.style.display = "none";
-        galeriePhoto.style.display = "block";
-        addImageBtn.style.display = "block";
-        retourButton.style.display ="none";
-
+///////Afficher la deuxieme page du modal/////
+function activerFormulaire() {
+    const addButton = document.querySelector('.addImg');
+    const form = document.getElementById('new-project-form');
+    const hr = document.querySelector('.line');
+    const p = document.querySelector('.galeriePhoto');
+    const iconReturn = document.querySelector(".return");
+    addButton.addEventListener('click', function() {
+        iconReturn.style.display ='block';//return
+        hr.style.display = 'none'; //hr
+        p.style.display = 'none'; // Galerie photo
+        addButton.style.display = 'none';  //Ajout photo
+        form.style.display = 'block';
     });
 }
+  
+  activerFormulaire();
 
-boutonRetour();
-
-
-
+const addButton = document.querySelector('.addImg'); // Bouton Ajout
+const modalGallery = document.getElementById('model_gallery'); // La galerie d'images
 
 
 
@@ -189,6 +121,8 @@ function afficherFormulaire() {
     const newImage = document.getElementById('new-project-form');//formulaire
     newImage.style.display = 'block'; // Affiche le formulaire
 }
+
+
 // Button Ajouter 
 addButton.addEventListener('click', () => {
     modalGallery.style.display = 'none'; // Cache la galerie d'images
@@ -273,45 +207,68 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
 });
 
   
- ///Ajout d'une image sur le formulaire//
+///Montrer une image sur le formulaire//
 
+//Input
+const imageInput = document.getElementById('imageInput');
+//Icon
+const imageIcon = document.querySelector('.fa-regular.fa-image');
+//Ajout Photo
+const addImageText = document.querySelector('.add-image label');
+//"jpg 4mo"
+const imageFormatInfo = document.querySelector('.add-image p');
+//Image
+const displayedImage = document.querySelector('.add-image img');
 
-  const imageInput = document.getElementById('imageInput');
-  const imageIcon = document.querySelector('.fa-regular.fa-image');
-  const addImageText = document.querySelector('.add-image label');
-  const imageFormatInfo = document.querySelector('.add-image p');
+//AFFICHAGE 
 
-  imageInput.addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Récupérer le fichier sélectionné
-  
+function displaySelectedImage(event) {
+    const file = event.target.files[0];
+
     if (file) {
-      const reader = new FileReader();
-  
-      reader.onload = function(e) {
-        const imgSrc = e.target.result; // Récupérer l'URL de l'image
+        const reader = new FileReader();
 
-        const newImage = document.createElement('img');
-        newImage.src = imgSrc;
-        
-        newImage.style.height = '190px';
-        newImage.style.width = '130px';
-  
-        // Cela va remplacer l'icone par l'image 
-        const addImageDiv = document.querySelector('.add-image');
-        addImageDiv.replaceChild(newImage, imageIcon);
-  
-       
-        addImageText.style.display = 'none';
-        imageFormatInfo.style.display = 'none';
-        imageInput.style.display ='none';
-      };
-  
-      reader.readAsDataURL(file); // Lire le fichier en tant que Data URL
+        reader.onload = function(e) {
+            const imgSrc = e.target.result;//Recupération de l'URL
+            //Creation du nouvel élément
+            const newImage = document.createElement('img');
+            newImage.src = imgSrc;//La source de l'image
+            newImage.style.height = '190px';
+            newImage.style.width = '130px';
+
+            const addImageDiv = document.querySelector('.add-image');
+            addImageDiv.replaceChild(newImage, imageIcon);
+
+            // Cache les autres éléments
+            addImageText.style.display = 'none';
+            imageFormatInfo.style.display = 'none';
+            imageInput.style.display = 'none';
+        };
+
+        reader.readAsDataURL(file); // Lecture du fichier en tant que Data URL
     }
-  });
+}
+
+imageInput.addEventListener('change', displaySelectedImage);
 
 
-  
+// RESET Image 
+function resetSelectedImage() {
+    //On replace l'icon par l'image 
+    const addImageDiv = document.querySelector('.add-image');
+    addImageDiv.replaceChild(imageIcon, addImageDiv.firstChild);
+
+    // Réinitialisation des elements masquées 
+    addImageText.style.display = 'block';
+    imageFormatInfo.style.display = 'block';
+    imageInput.style.display = 'block';
+    const addedImage = document.querySelector('.add-image img');
+    // Supprime l'image ajoutée SI elle existe
+    if (addedImage) {
+        addedImage.remove();
+    }
+}
+
 //CSS Bouton Valider///  
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('new-project-form');
@@ -337,4 +294,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+function boutonRetour() {
+    const formulaire = document.getElementById('new-project-form');
+    const retourButton = document.querySelector(".return");
+    const modalGallery = document.querySelector(".modal-gallery");
+    const newProjectForm = document.getElementById("new-project-form");
+    const galeriePhoto = document.querySelector(".galeriePhoto");
+    const addImageBtn = document.querySelector(".addImg");
+    const hrLine = document.querySelector(".line");
+    const addImageDiv = document.querySelector('.add-image img');
 
+    retourButton.addEventListener("click", () => {
+        addImageDiv.innerHTML = '';
+        modalGallery.style.display = "grid";
+        hrLine.style.display = "block";
+        newProjectForm.style.display = "none";
+        galeriePhoto.style.display = "block";
+        addImageBtn.style.display = "block";
+        retourButton.style.display ="none";
+        //Reset formulaire
+        formulaire.reset();
+        //Appel à la fonction pour reset l'ajout d'image
+        resetSelectedImage();
+    });
+}
+
+boutonRetour();
+
+//ouverture et fermeture du modale /////
+let modal = null;
+
+
+const openModal = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const target = document.querySelector(e.target.getAttribute('href'));
+
+    target.style.display = null;
+    target.removeAttribute('aria-hidden');
+    target.setAttribute('aria-modal', 'true');
+    modal = target;
+    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+    window.addEventListener('click', closeModalOutside);
+};
+document.querySelectorAll('.js-modal').forEach(a => {
+    a.addEventListener('click', openModal);
+});
+
+const closeModal = function(e) {
+    if (modal === null) return;
+    e.preventDefault();
+    e.stopPropagation();
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
+    window.removeEventListener('click', closeModalOutside);
+    modal = null;
+}
+
+const closeModalOutside = function(e) {
+    const formulaire = document.getElementById('new-project-form');
+    if (e.target === modal) {
+        closeModal(e);
+        formulaire.reset();//Reset le Formulaire 
+        //Appel à la fonction pour reset l'ajout d'image
+        resetSelectedImage();
+    }
+};

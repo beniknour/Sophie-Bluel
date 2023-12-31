@@ -49,3 +49,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+
+/////LOGOUT////
+
+
+document.addEventListener('DOMContentLoaded', (e) => {
+  const loggedIn = localStorage.getItem("loggedIn");
+  const loginButton = document.getElementById('login');
+
+  if (loggedIn === "true" || loggedIn === true) {
+    loginButton.textContent = 'logout';//Si true alors on voit logout
+    loginButton.classList.add('loggedOF');
+    loginButton.addEventListener('click', function(e){
+        e.preventDefault();
+
+        //Remove localstorage et loggedIn 
+        localStorage.removeItem('token');
+        localStorage.removeItem('loggedIn');
+
+        // Redirection
+        location.href = './index.html';
+      });
+  } else {
+    loginButton.classList.add('loggedOn');//lorsqu'on voit le login
+  }
+});

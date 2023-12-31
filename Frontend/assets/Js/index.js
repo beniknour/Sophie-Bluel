@@ -55,6 +55,7 @@ export{displayWorks};
 
 ////////////////afficher les boutons seulement aprés user = true///////////////
 function estConnecte() {
+  
   // Récupère l'état de connexion depuis le localStorage
   const loggedIn = localStorage.getItem("loggedIn");
   return loggedIn === "true"; 
@@ -69,25 +70,17 @@ function gererVisibiliteElement() {
 }
 
   gererVisibiliteElement();
+
+
 //Masque les boutons de tri
-window.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', (event) => {
   const loggedIn = localStorage.getItem("loggedIn");
   if (loggedIn === "true") {
       const triButtons = document.querySelector('#portfolio .tri');
       if (triButtons) {
           triButtons.style.display = 'none';
       }
-      localStorage.removeItem("loggedIn");
+      // localStorage.removeItem("loggedIn");
   }
 }); 
-
-
-
-
-
-
-
-
-
-
 
