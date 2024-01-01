@@ -2,7 +2,11 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+html{
 
+
+	background-color: #faf9f3;
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -110,8 +114,7 @@ li:hover {
 }
 #introduction img {
 	display: block;
-	margin: auto;
-	width: 80%;
+	width: 90%;
 }
 
 #introduction article {
@@ -300,6 +303,7 @@ a:active{
 	border: none;
 	font-size: 20px;
 	right: -595px;
+	cursor: pointer;
 }
 
 /**Ajouter une photo**/
@@ -496,6 +500,8 @@ a:active{
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
+	margin-bottom: 38px;
+	margin-top: 100px;
 }
 .fa-pen-to-square{
 	color: #000;
@@ -509,4 +515,27 @@ a:active{
 a {
 	color: #000; 
 	text-decoration: none; 
+  }
+
+  /**edition**/
+
+  .edition{
+
+	display: flex;
+	justify-content: center;
+	background-color: black;
+	color: white;
+	text-align: left;
+	gap: 5px;
+	font-size: 15px;
+	position: fixed;
+	width: auto;
+	top: 0px;
+	right: 10px;
+	left: 0px;
+	padding: 10px 0;
+  }
+  .edition .fa-regular{
+
+	color: white;
   }

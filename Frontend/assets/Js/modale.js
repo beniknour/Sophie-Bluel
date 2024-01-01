@@ -147,7 +147,6 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
     const imageFile = document.getElementById("imageInput").files[0];
     const category = document.getElementById("categorySelect").value;
     const categoryID = categories[category];
-
     const errorMsg = document.getElementById("msgError");
 
     if (!title || !imageFile || !category) {
@@ -277,22 +276,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const categorySelect = document.getElementById('categorySelect');
     const submitButton = document.querySelector('.addImage');
 
-    const toggleSubmitButton = () => {
+    const toggleSubmitButton = () => {  
         if (titleInput.value && imageInput.value && categorySelect.value) {
             submitButton.classList.add('active');
-            submitButton.removeAttribute('disabled');
+            submitButton.removeAttribute('disabled'); 
         } else {
             submitButton.classList.remove('active');
             submitButton.setAttribute('disabled', 'true');
         }
     };
-
     form.addEventListener('input', toggleSubmitButton);
-
     toggleSubmitButton();
-});
-
-
+})
 
 function boutonRetour() {
     const formulaire = document.getElementById('new-project-form');
@@ -343,6 +338,7 @@ document.querySelectorAll('.js-modal').forEach(a => {
 });
 
 const closeModal = function(e) {
+    const formulaire = document.getElementById('new-project-form');
     if (modal === null) return;
     e.preventDefault();
     e.stopPropagation();
@@ -352,6 +348,9 @@ const closeModal = function(e) {
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
     window.removeEventListener('click', closeModalOutside);
     modal = null;
+    formulaire.reset();//Reset le Formulaire 
+    //Appel à la fonction pour reset l'ajout d'image
+    resetSelectedImage();
 }
 
 const closeModalOutside = function(e) {

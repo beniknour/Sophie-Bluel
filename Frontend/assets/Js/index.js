@@ -84,3 +84,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 }); 
 
+//edition
+const loggedIn = localStorage.getItem("loggedIn");
+document.addEventListener('DOMContentLoaded', () => {
+  if (loggedIn) {
+    const editDiv = document.createElement('div');
+    editDiv.classList.add('edition'); // Ajout de la classe 
+
+    // Création de l'icône
+    const editIcon = document.createElement('i');
+    editIcon.classList.add('fa-regular', 'fa-pen-to-square');
+    editDiv.appendChild(editIcon); // Ajout de l'icône à la balise div
+
+    // Ajout du paragraphe contenant le texte
+    const editP= document.createElement('p');
+    editP.textContent = 'Mode édition';
+    editDiv.appendChild(editP); // Ajout du paragraphe à la balise div
+
+    // Insertion de l'élément en firstChild
+    document.body.insertBefore(editDiv, document.body.firstChild);
+}
+});
