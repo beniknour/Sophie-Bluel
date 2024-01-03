@@ -460,7 +460,16 @@ a:active{
 
 	padding-left: -5px;
 }
+/**Message Erreur **/
 
+#msgError{
+
+
+	color: red;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 35px;
+}
 
 /**Valider**/
 

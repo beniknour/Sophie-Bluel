@@ -126,8 +126,6 @@ function afficherFormulaire() {
 // Button Ajouter 
 addButton.addEventListener('click', () => {
     modalGallery.style.display = 'none'; // Cache la galerie d'images
-    
-
     afficherFormulaire();
 
 });
@@ -147,16 +145,8 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
     const imageFile = document.getElementById("imageInput").files[0];
     const category = document.getElementById("categorySelect").value;
     const categoryID = categories[category];
-    const errorMsg = document.getElementById("msgError");
-
-    if (!title || !imageFile || !category) {
-        errorMsg.textContent = "Veuillez remplir tous les champs du formulaire.";
-        return;
-    } else {
-        errorMsg.textContent = ""; 
-    }
-  
     const formData = new FormData();
+
     formData.append("title", title);
     formData.append("image", imageFile);
     formData.append("category", categoryID);
@@ -182,15 +172,12 @@ document.getElementById("new-project-form").addEventListener("submit", async (e)
                 newImage.src = responseData.imageUrl;
                 const newTitle = document.createElement("figcaption");
                 newTitle.innerText = title;
-    
                 newElement.appendChild(newImage);
                 newElement.appendChild(newTitle);
-    
                 // Ajout de la nouvelle carte image à la galerie
-                const gallery = document.querySelector("#gallery");
-                gallery.prepend(newElement);
-                
-                // gallery.insertBefore(newElement, gallery.firstChild);
+                const gallery = document.querySelector(".gallery");
+                gallery.appendChild(newElement);
+
                 // Efface le formulaire après l'ajout
                 document.getElementById("new-project-form").reset();
             }
@@ -275,19 +262,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageInput = document.getElementById('imageInput');
     const categorySelect = document.getElementById('categorySelect');
     const submitButton = document.querySelector('.addImage');
-
+    const errorMsg = document.getElementById("msgError");
     const toggleSubmitButton = () => {  
         if (titleInput.value && imageInput.value && categorySelect.value) {
             submitButton.classList.add('active');
-            submitButton.removeAttribute('disabled'); 
+            // submitButton.removeAttribute('disabled'); 
         } else {
             submitButton.classList.remove('active');
-            submitButton.setAttribute('disabled', 'true');
+            //desactiver le bouton
+            // submitButton.setAttribute('disabled', 'true');
+           
         }
+
+        
     };
     form.addEventListener('input', toggleSubmitButton);
     toggleSubmitButton();
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!titleInput.value || !imageInput.value || !categorySelect.value) {
+            errorMsg.textContent = "Veuillez remplir tous les champs du formulaire.";
+            setTimeout(1000);
+        } else {
+            errorMsg.textContent = ""; 
+            
+        }
+    });
+    
 })
+
+
+
+
+
 
 function boutonRetour() {
     const formulaire = document.getElementById('new-project-form');
@@ -298,7 +306,7 @@ function boutonRetour() {
     const addImageBtn = document.querySelector(".addImg");
     const hrLine = document.querySelector(".line");
     const addImageDiv = document.querySelector('.add-image img');
-
+    const errorMsg = document.getElementById('msgError');
     retourButton.addEventListener("click", () => {
         addImageDiv.innerHTML = '';
         modalGallery.style.display = "grid";
@@ -311,6 +319,8 @@ function boutonRetour() {
         formulaire.reset();
         //Appel à la fonction pour reset l'ajout d'image
         resetSelectedImage();
+        //Reset msg d'erreur
+        errorMsg.textContent = '';
     });
 }
 
@@ -339,6 +349,7 @@ document.querySelectorAll('.js-modal').forEach(a => {
 
 const closeModal = function(e) {
     const formulaire = document.getElementById('new-project-form');
+    const errorMsg = document.getElementById('msgError');
     if (modal === null) return;
     e.preventDefault();
     e.stopPropagation();
@@ -351,14 +362,19 @@ const closeModal = function(e) {
     formulaire.reset();//Reset le Formulaire 
     //Appel à la fonction pour reset l'ajout d'image
     resetSelectedImage();
+    //Reset msg d'erreur
+    errorMsg.textContent = '';
 }
 
 const closeModalOutside = function(e) {
     const formulaire = document.getElementById('new-project-form');
+    const errorMsg = document.getElementById('msgError');
     if (e.target === modal) {
         closeModal(e);
         formulaire.reset();//Reset le Formulaire 
         //Appel à la fonction pour reset l'ajout d'image
         resetSelectedImage();
+        //Reset msg d'erreur
+        errorMsg.textContent = '';
     }
 };
