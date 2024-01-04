@@ -8,6 +8,7 @@ let allWorks = []; // Stocke toutes les œuvres récupérées depuis l'API
 function displayWorks(works) {
   gallery.innerHTML = ''; // Efface la galerie actuelle
   works.forEach(work => {
+    //Création des balises
     const figure = document.createElement('figure');
     const img = document.createElement('img');
     img.src = work.imageUrl;
@@ -23,7 +24,7 @@ function displayWorks(works) {
 fetch('http://localhost:5678/api/works')// Lien de L'API
   .then(response => {
     if (response.ok) {
-      return response.json();
+      return response.json();// Renvoie des données sous format JSON
     }
     throw new Error('Erreur lors de la récupération des projets');// Message d'erreur 
   })
@@ -38,19 +39,21 @@ fetch('http://localhost:5678/api/works')// Lien de L'API
 // Buttons de catégories
 categoryButtons.forEach(button => {
   button.addEventListener('click', function () {
-    const selectedCategory = button.id.toLowerCase();
+    const selectedCategory = button.id.toLowerCase();//Récupere les Convertit en minuscule
     let filteredWorks = [];// Création du tableau vide
     if (selectedCategory === 'tous') {
       filteredWorks = allWorks; // Affiche Tous
     } else {
+      //Filtration des oeuvres selon les catégories
       filteredWorks = allWorks.filter(work => {
+        // Vérifie si le nom de la catégorie inclut la catégorie sélectionnée
         return work.category.name.toLowerCase().includes(selectedCategory.replace('hotelsrestaurants', 'hotels & restaurants'));
       });
     }
-    displayWorks(filteredWorks); 
+    displayWorks(filteredWorks); // Affiche les œuvres filtrées
   });
 });
-export{displayWorks};
+// export{displayWorks};
 
 
 ////////////////afficher les boutons seulement aprés user = true///////////////
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 }); 
 
-//edition
+//Mode édition
 const loggedIn = localStorage.getItem("loggedIn");
 document.addEventListener('DOMContentLoaded', () => {
   if (loggedIn) {

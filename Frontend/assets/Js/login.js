@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
 
       // Récupère les entrées de formulaire
-      const information = new FormData(form);
-      const payload = new URLSearchParams(information);
+      const information = new FormData(form);// Récupère les données du formulaire
+      const payload = new URLSearchParams(information);// Manipule les données du formulaire
 
       // Fait une demande POST au serveur pour vérifier les informations de connexion
       fetch("http://localhost:5678/api/users/login", {

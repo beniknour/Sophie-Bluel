@@ -79,7 +79,7 @@ function displayImagesInModal(images) {
         
 
 
-        //affichage de la poubelle
+        //Affichage de la poubelle
         const deleteIcon = document.createElement('i');
         deleteIcon.classList.add('far', 'fa-trash-alt'); 
 
@@ -218,9 +218,8 @@ function displaySelectedImage(event) {
             const imgSrc = e.target.result;//Recupération de l'URL
             //Creation du nouvel élément
             const newImage = document.createElement('img');
+            newImage.classList.add('newimg');
             newImage.src = imgSrc;//La source de l'image
-            newImage.style.height = '190px';
-            newImage.style.width = '130px';
 
             const addImageDiv = document.querySelector('.add-image');
             addImageDiv.replaceChild(newImage, imageIcon);
@@ -295,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
+//Bouton de Retour//
 
 function boutonRetour() {
     const formulaire = document.getElementById('new-project-form');
@@ -326,7 +325,7 @@ function boutonRetour() {
 
 boutonRetour();
 
-//ouverture et fermeture du modale /////
+//Ouverture du modale /////
 let modal = null;
 
 
@@ -347,6 +346,7 @@ document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal);
 });
 
+// Fermeture du modale
 const closeModal = function(e) {
     const formulaire = document.getElementById('new-project-form');
     const errorMsg = document.getElementById('msgError');
