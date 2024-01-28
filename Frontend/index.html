@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
-
+	
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<!-- lien fontawesome -->
+	 <!--lien fontawesome-->
 	<script src="https://kit.fontawesome.com/f266b52627.js" crossorigin="anonymous"></script>
-
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
 	<meta name="description" content="">
@@ -27,12 +26,11 @@
 				<li><a href="#projets">projets</a></li>
 				<li><a href="#contact">contact</a></li>
 				<li><a href="login.html" id="login">login</a></li>
-				<!-- <li><a id="logout" href="#">logout</a></li> -->
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
 
-	</header>
+	</header>  
 	<!-- modale -->
 
 	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" style="display: none;">
@@ -46,9 +44,12 @@
 
 			<div id="model_gallery" class="modal-gallery"></div>
 			<hr class="line">
-			<button class="addImg">Ajouter une photo</button>
+			<button type="button" class="addImg">Ajouter une photo</button>
 
 			<!-- ajout nouveau projet -->
+
+
+
 			<section id="new-project">
 
 				<form id="new-project-form" style="display: none;">
@@ -67,7 +68,9 @@
 						<input type="text" id="titleInput">
 					</div>
 					<div class="add-category">
+
 						<label for="categorySelect">Catégorie</label>
+
 						<select id="categorySelect">
 							<option value=""></option>
 							<option value="Objets">Objets</option>
@@ -80,6 +83,7 @@
 					<hr class="line">
 					<button class="addImage" type="submit">Valider</button>
 				</form>
+				
 			</section>
 			
 
@@ -117,12 +121,12 @@
 				<button id="tous">Tous</button>
 				<button id="objets">Objets</button>
 				<button id="appartements">Appartements</button>
-				<button id="hotelsRestaurants">Hotels&Restaurants</button>
+				<button id="hotelsRestaurants">Hôtels & restaurants</button>
 
-			</div>
+			</div> 
 
-			<div class="gallery">
-				<figure>
+			<div class="gallery"> 
+				 <!--<figure>
 					<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
 					<figcaption>Abajour Tahina</figcaption>
 				</figure>
@@ -165,7 +169,7 @@
 				<figure>
 					<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
 					<figcaption>Hotel First Arte - New Delhi</figcaption>
-				</figure>
+				</figure>--> 
 			</div>
 		</section>
 		<section id="contact">
@@ -178,7 +182,7 @@
 				<input type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
-				<input type="submit" value="Envoyer">
+				<input type="button" value="Envoyer">
 			</form>
 		</section>
 
@@ -191,10 +195,9 @@
 			</ul>
 		</nav>
 	</footer>
-
-	<script type="module" src="./assets/Js/index.js"></script>
-	<script type="module" src="./assets/Js/modale.js"></script>
-	<script type="module" src="./assets/Js/login.js"></script>
+	<script src="./assets/Js/modale.js"></script>
+	<script src="./assets/Js/index.js"></script>
+	<script src="./assets/Js/login.js"></script>
 </body>
 
 </html>

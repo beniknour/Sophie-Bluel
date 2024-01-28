@@ -3,12 +3,13 @@
 const gallery = document.querySelector('.gallery');
 const categoryButtons = document.querySelectorAll('.tri button');
 let allWorks = []; // Stocke toutes les œuvres récupérées depuis l'API
+const loggedIn = localStorage.getItem("loggedIn");
 
 // Fonction pour afficher les œuvres dans la galerie
 function displayWorks(works) {
   gallery.innerHTML = ''; // Efface la galerie actuelle
   works.forEach(work => {
-    //Création des balises
+    // Création des balises
     const figure = document.createElement('figure');
     const img = document.createElement('img');
     img.src = work.imageUrl;
@@ -21,20 +22,24 @@ function displayWorks(works) {
   });
 }
 
-fetch('http://localhost:5678/api/works')// Lien de L'API
-  .then(response => {
-    if (response.ok) {
-      return response.json();// Renvoie des données sous format JSON
-    }
-    throw new Error('Erreur lors de la récupération des projets');// Message d'erreur 
-  })
-  .then(works => {
-    allWorks = works; // Stocke toutes les œuvres récupérées
-    displayWorks(allWorks); // Affiche toutes les œuvres initialement
-  })
-  .catch(error => {
-    console.error('Erreur :', error);
-  });
+
+// Si user est false, alors exécuter le code
+if (!loggedIn) {
+  fetch('http://localhost:5678/api/works') // Lien de L'API
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // Renvoie des données sous format JSON
+      }
+      throw new Error('Erreur lors de la récupération des projets'); // Message d'erreur 
+    })
+    .then(works => {
+      allWorks = works; // Stocke toutes les œuvres récupérées
+      displayWorks(allWorks); // Affiche toutes les œuvres initialement
+    })
+    .catch(error => {
+      console.error('Erreur :', error);
+    });
+}
 
 // Buttons de catégories
 categoryButtons.forEach(button => {
@@ -53,17 +58,18 @@ categoryButtons.forEach(button => {
     displayWorks(filteredWorks); // Affiche les œuvres filtrées
   });
 });
-// export{displayWorks};
+
 
 
 ////////////////afficher les boutons seulement aprés user = true///////////////
+
+
 function estConnecte() {
-  
   // Récupère l'état de connexion depuis le localStorage
   const loggedIn = localStorage.getItem("loggedIn");
   return loggedIn === "true"; 
 }
-
+// Masque openodal
 function gererVisibiliteElement() {
   if (estConnecte()) {
     document.getElementById('openModal').style.display = 'block';
@@ -72,23 +78,24 @@ function gererVisibiliteElement() {
   }
 }
 
-  gererVisibiliteElement();
+gererVisibiliteElement();
 
 
-//Masque les boutons de tri
-document.addEventListener('DOMContentLoaded', (event) => {
+// Masque les boutons de tri
+
+document.addEventListener('DOMContentLoaded', () => {
   const loggedIn = localStorage.getItem("loggedIn");
   if (loggedIn === "true") {
       const triButtons = document.querySelector('#portfolio .tri');
       if (triButtons) {
           triButtons.style.display = 'none';
       }
-      // localStorage.removeItem("loggedIn");
   }
+  console.log('tri');
 }); 
 
-//Mode édition
-const loggedIn = localStorage.getItem("loggedIn");
+// Mode édition 
+
 document.addEventListener('DOMContentLoaded', () => {
   if (loggedIn) {
     const editDiv = document.createElement('div');

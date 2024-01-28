@@ -1,22 +1,16 @@
 
-//LOGIN 
+//****LOGIN//****
 
-
-document.addEventListener('DOMContentLoaded', function () {
+function loginUser() {
   const form = document.getElementById("loginForm");
-  if(form){
+  const error = document.getElementById("error");
 
-  
-    // Écouteur d'événement pour le formulaire de connexion
+  if (form) {
     form.addEventListener("submit", function (e) {
-      // Empêche l'envoi par défaut du formulaire par le navigateur
       e.preventDefault();
 
-      // Récupère les entrées de formulaire
-      const information = new FormData(form);// Récupère les données du formulaire
-      const payload = new URLSearchParams(information);// Manipule les données du formulaire
-
-      // Fait une demande POST au serveur pour vérifier les informations de connexion
+      const information = new FormData(form);
+      const payload = new URLSearchParams(information);
       fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: {
@@ -27,51 +21,47 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          // Si l'id est vrai alors true
           if (data.userId == 1) {
-            // Stockage dans le localStorage
             localStorage.setItem("token", data.token);
-            // Redirection vers la page souhaitée et "true" pour les modifications du index.html
             localStorage.setItem("loggedIn", "true");
             location.href = "./index.html";
-            document.getElementById('openModal').style.display = 'block';
-
           } else {
-            error.innerText = " Erreur dans l’identifiant ou le mot de passe";
-            // Efface le message d'erreur après un certain temps
+            error.innerText =
+              "Erreur dans l’identifiant ou le mot de passe";
             function msgdelete() {
               error.innerText = "";
             }
-            setTimeout(msgdelete, 20000); //20 secondes
+            setTimeout(msgdelete, 20000);
           }
         })
-        .catch((err) => console.log(err)); // Affiche l'erreur dans la console en cas d'erreur de demande
+        .catch((err) => console.log(err));
     });
   }
-});
+}
 
 
-/////LOGOUT////
 
+//****LOGOUT ****//
 
-document.addEventListener('DOMContentLoaded', (e) => {
+function logoutUser() {
   const loggedIn = localStorage.getItem("loggedIn");
-  const loginButton = document.getElementById('login');
+  const loginButton = document.getElementById("login");
 
   if (loggedIn === "true" || loggedIn === true) {
-    loginButton.textContent = 'logout';//Si true alors on voit logout
-    loginButton.classList.add('loggedOF');
-    loginButton.addEventListener('click', function(e){
-        e.preventDefault();
-
-        //Remove localstorage et loggedIn 
-        localStorage.removeItem('token');
-        localStorage.removeItem('loggedIn');
-
-        // Redirection
-        location.href = './index.html';
-      });
+    loginButton.textContent = "logout";
+    loginButton.classList.add("loggedOF");
+    loginButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      localStorage.removeItem("loggedIn");
+      location.href = "./index.html";
+    });
   } else {
-    loginButton.classList.add('loggedOn');//lorsqu'on voit le login
+    loginButton.classList.add("loggedOn");
   }
-});
+}
+
+// Appeler les fonctions directement sans attendre le chargement du DOM
+loginUser();
+logoutUser();
+
