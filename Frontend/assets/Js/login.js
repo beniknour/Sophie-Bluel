@@ -61,7 +61,7 @@ function logoutUser() {
   }
 }
 
-// Appeler les fonctions directement sans attendre le chargement du DOM
+
 loginUser();
 logoutUser();
 

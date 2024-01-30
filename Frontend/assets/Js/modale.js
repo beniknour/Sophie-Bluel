@@ -1,6 +1,7 @@
 let token = localStorage.getItem("token");
 
 
+
 //******************** SUPRESSION d'un projet ********************//
 
 //AFFICHAGE IMAGES SUR LE MODAL//
@@ -34,10 +35,10 @@ async function displayImagesInModal(images) {
 
 
 function deleteProject(projectId) {
-    // const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
-    // if (!confirmation) {
-    //     return false;
-    // }
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
+    if (!confirmation) {
+        return false;
+    }
 
     fetch(`http://localhost:5678/api/works/${projectId}`, {
         method: 'DELETE',
@@ -129,7 +130,23 @@ function updateHomePage() {
     });
 }
 
+// Mettre à jour de la modal //
 
+function updateModal() {
+    fetch('http://localhost:5678/api/works', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(works => {
+        console.log('Works from API (Modal):', works);
+        displayImagesInModal(works);
+    })
+    .catch(error => {
+        console.error('Erreur (Modal) :', error);
+    });
+}
 //************************** PAGE MODAL 2 **************************//
 
 ///////Afficher la deuxieme page du modal/////
@@ -245,21 +262,14 @@ document.getElementById("new-project-form").addEventListener("submit", async fun
         });
 
         if (response.ok) {
-            alert("Photo ajoutée avec succès !");
+            
             const responseData = await response.json();
             if (imageFile.size < 4 * 1048576) {
-                // Création de la nouvelle carte image
-                const newElement = document.createElement("figure");
-                const newImage = document.createElement("img");
-                newImage.src = responseData.imageUrl;
-                const newTitle = document.createElement("figcaption");
-                newTitle.innerText = title;
-                newElement.appendChild(newImage);
-                newElement.appendChild(newTitle);
-                // Ajout de la nouvelle carte image à la galerie
-                const gallery = document.querySelector(".gallery");
-                gallery.appendChild(newElement);
+                alert("Photo ajoutée avec succès !");
+                updateHomePage();
+                updateModal();
 
+                console.log("Informations du projet ajouté :", responseData);
                 // Efface le formulaire après l'ajout
                 document.getElementById("new-project-form").reset();
                 resetSelectedImage();
